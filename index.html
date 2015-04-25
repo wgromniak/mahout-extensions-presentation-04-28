@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>mahout-extensions</title>
+
+		<meta name="description" content="O bibliotece mahout-extensions">
+		<meta name="author" content="Wiktor Gromniak">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+                <section>
+                    <h1>JA vs. 1TB</h1>
+                    <h1>1 : 0</h1>
+                    <p>
+                        <a href ="https://github.com/wgromniak/mahout-extensions">github.com/wgromniak/mahout-extensions</a>
+                    </p>
+                </section>
+                <section>
+                    <p>
+                        <a href ="https://github.com/wgromniak/mahout-extensions">github.com/wgromniak/mahout-extensions</a>
+                    </p>
+                </section>
+                <section>
+                    <section>
+                        <img src="http://dev.bowdenweb.com/a/i/dev/webcomm/apache/mantle-hadoop.png">
+                    </section>
+                    <section data-background="#dddddd">
+                        <img src="http://www.markhneedham.com/blog/wp-content/uploads/2015/04/Spark-logo-192x100px.png">
+                    </section>
+                    <section data-background="#ffffff">
+                        <h2>RandomReducts</h2>
+                        <img src="RR.png">
+                    </section>
+                    <section>
+                        <p>
+                            \[FScore_i = \frac{ \sum_{k=1}^s \sum_{l=1}^{t_k} \mathbb{I}(a_i \in RED_{k,l}) }
+                            { \sum_{k=1}^s \mathbb{I}(a_i \in SUB_k) }\]
+                        </p>
+                        <br><br>
+                        <p>
+                            <ul style="list-style: none">
+                                <li> \(s\) - liczba podzbiorów attrybutów </li>
+                                <li> \(t_k\) - liczba reduktów w \(k\)-tym podzbiorze </li>
+                                <li> \(RED_{k,l}\) - \(l\)-ty redukt w \(k\)-tym podzbiorze </li>
+                                <li> \(SUB_k\) - \(k\)-ty podzbiór attrybutów </li>
+                            </ul>
+                        </p>
+                    </section>
+                    <section data-background="#ffffff">
+                        <h2>MCFS</h2>
+                        <img src="MCFS.png">
+                    </section>
+                    <section>
+                        <p>
+                            \[wAcc = \frac{ 1 }{ c } \sum_{i=1}^c \frac{ n_{ii} }{ n_{i1} + \dots + n_{ic} } \]
+                        </p>
+                        <br><br>
+                        <p>
+                            <ul style="list-style: none">
+                                <li> \(n_{ij}\) - liczba przykładów z klasy \(i\) zaklasyfikowanych jako \(j\) </li>
+                                <li> \(i,j = 1, \dots, c\) </li>
+                            </ul>
+                        </p>
+                    </section>
+                    <section>
+                        <p>
+                            \[ RI_{g_k} = \sum_{\tau=1}^{st} wAcc^u \sum_{n_{g_k}(\tau)} IG(n_{g_k}(\tau)) \left( \frac{ \textrm{no. in } n_{g_k}(\tau) }{ \textrm{no. in } \tau } \right)^v \]
+                        </p>
+                        <br>
+                        <ul style="list-style: none">
+                            <li> \(\tau\) - drzewo </li>
+                            <li> \(g_k\) - attrybut </li>
+                            <li> \(n_{g_k}(\tau)\) - węzeł drzewa gdzie rozbicie na \(g_k\) </li>
+                            <li> \(\textrm{no. in } n_{g_k}(\tau)\) - liczba obiektów w węźle </li>
+                            <li> \(\textrm{no. in }(\tau)\) - liczba obiektów w korzeniu </li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h2>Fast cutoff</h2>
+                        <p>
+                            \[ N = \underset{ n \in \{1, \dots, d \} }{ \textrm{argmin} } \left( \left( 1 - \frac{\sum_{k=1}^n Score_k}{\sum_{k=1}^d Score_k} \right)^2 + \left( \frac{n}{d} \right)^2 \right) \]
+                        </p>
+                        <br>
+                        <ul style="list-style: none">
+                            <li> \(N\) - liczba istotnych atrybutów </li>
+                            <li> \(Score_k\) - wynik \(k\)-tego atrybutu </li>
+                            <li> \(d\) - liczba wszystkich atrybutów </li>
+                        </ul>
+                    </section>
+                    <section data-background="#ffffff">
+                        <img src="fast_cutoff.png">
+                    </section>
+                </section>
+                <section>
+                    <h2>Wszystko zaczęło się...</h2>
+                    <img class="fragment" src="https://navfinancials.files.wordpress.com/2012/07/old-computer2.jpg">
+                </section>
+                <section>
+                    <section>
+                        <h2>Wszystko zaczęło się...</h2>
+                        <p>
+                            ... rok temu
+                        </p>
+                    </section>
+                    <section id="frags2">
+                        <p style="margin: 10%">
+                            Policzenie RR na pojedynczym komputerze zajęło 9.2x dłużej niż MapReduce<br>!!!
+                        </p>
+                        <p class="fragment">
+                            184min vs. 20min
+                        </p>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <h2>Eksperymenty tegoroczne</h2>
+                    </section>
+                    <section>
+                        <h2>Test harness</h2>
+                        <p>
+                            10x ( 4x Intel Xeon E3-1220 @ 3.10GHz, 32GB RAM, 1TB HDD )
+                        </p>
+                    </section>
+                    <section>
+                        <h2>Test harness</h2>
+                        <p>
+                            Leukemia: 22,227 attr x 190 obj
+                        </p>
+                    </section>
+                    <section>
+                        <h2>Wynik referencyjny</h2>
+                        <h3>Drzewo C4.5</h3>
+                        <ul>
+                            <li> 81.58% </li>
+                            <li> 148 sec (wall clock) </li>
+                            <li> 22,227 attr </li>
+                        </ul>
+                    </section>
+                </section>
+                <section>
+                    <h2>Reducts Standalone</h2>
+                    <ul>
+                        <li> <span class="fragment highlight-red">69.47%</span> </li>
+                        <li> 46 min 16 sec </li>
+                        <li> 3,516 attr </li>
+                    </ul>
+                    <br>
+                    <p class="fragment">5000 podtablic, 150 atrybutów każda</p>
+                </section>
+                <section>
+                    <h2>Reducts MapReduce</h2>
+                    <ul>
+                        <li> 69.47% </li>
+                        <li> 20 min </li>
+                        <li> 3,516 attr </li>
+                    </ul>
+                </section>
+                <section>
+                    <section>
+                        <h2>Reducts Spark...</h2>
+                    </section>
+                    <section>
+                        <i><a href="http://blog.explainmydata.com/2014/05/spark-should-be-better-than-mapreduce.html">Spark should be better than MapReduce (if only it worked)</a></i>
+                    </section>
+                </section>
+                <section>
+                    <h2>Reducts Spark</h2>
+                    <ul>
+                        <li> 69.47% </li>
+                        <li> <span class="fragment highlight-blue">9 min 7 sec</span> </li>
+                        <li> 3,516 attr </li>
+                    </ul>
+                </section>
+                <section>
+                    <section>
+                        <h2>Gdy nagle...</h2>
+                    </section>
+                    <section>
+                        <h2>Bugi w <a href="http://rseslib.mimuw.edu.pl/">Rseslib</a>ie</h2>
+                        co najmniej 2 u Johnsona
+                    </section>
+                    <section>
+                        Brak reduktów w wersji <i>One</i>
+                    </section>
+                    <section>
+					    <pre><code class="java">
+    private Collection&lt;BitSet&gt;
+             getAllCountedReducts(Vector&lt;BitSet&gt; discern_attrs){
+      HashSet&lt;BitSet&gt; reducts = new HashSet&lt;BitSet&gt;();
+
+      int[] startCount = getCountingAttributes(discern_attrs);
+      LinkedList&lt;Integer[]&gt; attributesList =
+                             FindFirstAllMaximums(startCount);
+      (...)
+      return reducts;
+    }
+					</code></pre>
+				    </section>
+                </section>
+                <section>
+                    <h2>Jeszcze raz</h2>
+                </section>
+                <section>
+                    <h2>Reducts Spark</h2>
+                    <ul>
+                        <li> <span class="fragment highlight-blue">82.63%</span> </li>
+                        <li> <span class="fragment highlight-blue">2 min 24 sec</span> </li>
+                        <li> 855 attr </li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>Reducts MapReduce</h2>
+                    <ul>
+                        <li> 82.63% </li>
+                        <li> 15 min 45 sec </li>
+                        <li> 855 attr </li>
+                    </ul>
+                </section>
+                <section>
+                    <table>
+                        <tr><td>Spark</td><td>MapRed</td><td>Standalone</td></tr>
+                        <tr><td>2 min 24 sec</td><td>15 min 45 sec</td><td class="fragment"><span style="color: #1b91ff">8 min 3 sec</span></td></tr>
+                    </table>
+                </section>
+                <section>
+                    <section data-background="IMGP9103.JPG">
+                        <h2>Drzewa</h2>
+                    </section>
+                    <section data-background="https://community.pafa.org/image/Foundry.jpg">
+                        <h2><a href="http://cognitivefoundry.org/">Cognitive Foundry</a></h2>
+                    </section>
+                </section>
+                <section>
+                    <h2>Trees Standalone</h2>
+                    <ul>
+                        <li> <span class="fragment highlight-blue">86.31%</span> </li>
+                        <li> 143 min 27 sec </li>
+                        <li> <span class="fragment highlight-blue">167 attr</span> </li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>Trees MapReduce</h2>
+                    <ul>
+                        <li> 86.31% </li>
+                        <li> <span class="fragment highlight-blue">30 min 14 sec</span> </li>
+                        <li> 167 attr </li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>Trees Spark</h2>
+                    <ul>
+                        <li> 86.31% </li>
+                        <li> <span class="fragment highlight-blue">20 min 5 sec</span> </li>
+                        <li> 167 attr </li>
+                    </ul>
+                </section>
+                <section>
+                    <table>
+                        <tr><td></td><td>Ref</td><td>Reducts</td><td>Trees</td></tr>
+                        <tr><td>Acc</td><td>81.58%</td><td>82.63%</td><td ><span class="fragment highlight-blue">86.31%</span></td></tr>
+                        <tr><td>Attr</td><td>22,277</td><td>855</td><td><span class="fragment highlight-blue">167</span></td></tr>
+                        <tr><td>Time</td><td>148 sec</td><td><span class="fragment highlight-blue">2 min 24 sec</span></td><td>20 min 5 sec</td></tr>
+                    </table>
+                </section>
+                <section>
+                    <section>
+                        <h1>1TB</h1>
+                    </section>
+                    <section>
+                        <h2>Demo</h2>
+                    </section>
+                    <section>
+                        <p>1TB = 512 attr x 1,048,576 obj</p>
+                        <p>Generowanie zajęło 48 sec na Sparku</p>
+                    </section>
+                    <section>
+                        <h2>Reducts Spark</h2>
+                        <ul>
+                            <li> <span class="fragment highlight-blue">65 min 19 sec</span> </li>
+                            <li> <span class="fragment highlight-blue">14 attr</span> </li>
+                            <li> <span class="fragment highlight-blue">10,240 podtablic, 1024 atrybutów każda</span> </li>
+                        </ul>
+                    </section>
+                </section>
+                <section>
+                    <h2>Demo</h2>
+                </section>
+                <section>
+                    <h1>Dziękuję</h1>
+                    <p><a href ="https://github.com/wgromniak/mahout-extensions">github.com/wgromniak/mahout-extensions</a></p>
+                    <p><a href ="https://github.com/wgromniak/mahout-extensions">github.com/wgromniak/mahout-extensions</a></p>
+                </section>
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+                width: 1024,
+                height: 768,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true },
+                    { src: 'plugin/math/math.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
